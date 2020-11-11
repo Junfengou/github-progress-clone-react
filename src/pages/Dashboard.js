@@ -5,11 +5,13 @@ import { GithubContext } from "../context/context";
 
 function Dashboard() {
 	return (
-		<div>
-			<main>
-				<h2>Dashboard Page</h2>
-			</main>
-		</div>
+		<main>
+			<Navbar />
+			<Search />
+			<Info />
+			<User />
+			<Repos />
+		</main>
 	);
 }
 
