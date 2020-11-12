@@ -6,11 +6,11 @@ import { GithubContext } from "../context/context";
 function Dashboard() {
 	return (
 		<main>
-			<Navbar />
-			<Search />
+			{/* <Navbar /> */}
+			{/* <Search /> */}
 			<Info />
 			<User />
-			<Repos />
+			{/* <Repos /> */}
 		</main>
 	);
 }
