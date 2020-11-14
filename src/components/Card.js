@@ -31,7 +31,7 @@ function Card() {
 			<p className="bio">{bio}</p>
 			<div className="links">
 				<p>
-					<MdBusiness /> {company}
+					<MdBusiness /> {company || "No company"}
 				</p>
 				<p>
 					<MdLocationOn /> {location || "Somewhere in this world"}
