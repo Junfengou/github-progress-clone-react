@@ -5,7 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 function Navbar() {
 	return (
 		<Wrapper>
-			<h2>Navbar component</h2>
+			<h4>Welcome to my github search engine</h4>
 		</Wrapper>
 	);
 }
@@ -15,14 +15,15 @@ const Wrapper = styled.nav`
 	margin-bottom: 4rem;
 	background: var(--clr-white);
 	text-align: center;
-	display: grid;
-	grid-template-columns: auto auto 100px;
+	display: flex;
+	/* grid-template-columns: auto auto 100px; */
 	justify-content: center;
 	align-items: center;
 	gap: 1.5rem;
 	h4 {
 		margin-bottom: 0;
 		font-weight: 400;
+		/* border: solid red; */
 	}
 	img {
 		width: 35px !important;

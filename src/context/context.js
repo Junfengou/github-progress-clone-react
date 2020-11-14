@@ -14,24 +14,50 @@ const GithubProvider = ({ children }) => {
 	const [followers, setFollowers] = useState(mockFollowers);
 
 	const [request, setRequest] = useState(0);
-	const [loading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState({ show: false, msg: "" });
 
 	const searchGithubUser = async (user) => {
 		// console.log("user: ", user);
 
 		toggleError();
-		//loading: true
+		setIsLoading(true);
 
-		const response = await axios(`${rootUrl}/users/${user}`).catch((err) =>
+		const getProfile = await axios(`${rootUrl}/users/${user}`).catch((err) =>
 			console.log(err)
 		);
-		console.log("response: ", response);
-		if (response) {
-			setGithubUser(response.data);
+		const getRepos = await axios(
+			`${rootUrl}/users/${user}/repos?per_page=100`
+		).catch((err) => {
+			console.log(err);
+		});
+
+		const getFollowers = await axios(
+			`${rootUrl}/users/${user}/followers`
+		).catch((err) => {
+			console.log(err);
+		});
+
+		// console.log("response: ", response);
+		console.log("getRepos: ", getRepos);
+		console.log("getFollowers: ", getFollowers.data);
+		if (getProfile && getRepos && getFollowers) {
+			//3:40:00 [https://www.youtube.com/watch?v=dR_Fol8nAzo] rewatch this part if run into error
+			setGithubUser(getProfile.data);
+			setRepos(getRepos.data);
+			setFollowers(getFollowers.data);
+			//This line of code will make sure every information is loaded before display them on the site
+			//	instead of having each item load one at a time
+			await Promise.allSettled([getProfile, getRepos, getFollowers]).then(
+				(results) => {
+					console.log("results: ", results);
+				}
+			);
 		} else {
 			toggleError(true, "there is no user with that username");
 		}
+		checkRequest();
+		setIsLoading(false);
 	};
 
 	//check rate
@@ -60,7 +86,15 @@ const GithubProvider = ({ children }) => {
 
 	return (
 		<GithubContext.Provider
-			value={{ githubUser, repos, followers, request, error, searchGithubUser }}
+			value={{
+				githubUser,
+				repos,
+				followers,
+				request,
+				error,
+				searchGithubUser,
+				isLoading,
+			}}
 		>
 			{children}
 		</GithubContext.Provider>

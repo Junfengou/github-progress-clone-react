@@ -5,7 +5,9 @@ import { GithubContext } from "../context/context";
 
 function Search() {
 	const [user, setUser] = useState("");
-	const { request, error, searchGithubUser } = useContext(GithubContext);
+	const { request, error, searchGithubUser, isLoading } = useContext(
+		GithubContext
+	);
 	console.log("error: ", error);
 	console.log("request: ", request);
 	const handleSubmit = (e) => {
@@ -38,7 +40,7 @@ function Search() {
 							}}
 						/>
 						{/* Only display the button if the request is bigger than 0 */}
-						{request > 0 && <button type="submit">Search</button>}
+						{request > 0 && !isLoading && <button type="submit">Search</button>}
 					</div>
 				</form>
 				<h3>Request : {request} / 60</h3>
